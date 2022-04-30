@@ -27,7 +27,7 @@ namespace EmployeeManagemant
             services.AddDbContextPool<AppDbContext>(
             options => options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
             services.AddMvc().AddXmlSerializerFormatters();
-            services.AddTransient<IEmployeeRepository, MockEmployeeRepository>();
+            services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
             services.AddMvcCore(options => options.EnableEndpointRouting = false);
         }
 
