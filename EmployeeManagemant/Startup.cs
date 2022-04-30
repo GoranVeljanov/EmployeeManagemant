@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 using EmployeeManagemant.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;        
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.Extensions.Logging; 
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagemant
 {
@@ -23,8 +24,10 @@ namespace EmployeeManagemant
         }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContextPool<AppDbContext>(
+            options => options.UseSqlServer(_config.GetConnectionString("EmployeeDBConnection")));
             services.AddMvc().AddXmlSerializerFormatters();
-            services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
+            services.AddTransient<IEmployeeRepository, MockEmployeeRepository>();
             services.AddMvcCore(options => options.EnableEndpointRouting = false);
         }
 

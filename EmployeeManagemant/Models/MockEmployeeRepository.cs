@@ -8,6 +8,7 @@ namespace EmployeeManagemant.Models
     public class MockEmployeeRepository : IEmployeeRepository
     {
         private List<Employee> _employeeList;
+        private Employee employee;
 
         public MockEmployeeRepository()
         {
@@ -26,6 +27,16 @@ namespace EmployeeManagemant.Models
             return employee;
         }
 
+        public Employee Delete(int id)
+        {
+            _employeeList.FirstOrDefault(e => e.Id == id);
+            if (employee != null)
+            {
+                _employeeList.Remove(employee);
+            }
+            return employee;
+        }
+
         public IEnumerable<Employee> GetAllEmployee()
         {
             return _employeeList;
@@ -34,6 +45,18 @@ namespace EmployeeManagemant.Models
         public Employee GetEmployee(int id)
         {
             return _employeeList.FirstOrDefault(e => e.Id == id);
+        }
+
+        public Employee Update(Employee employeeChanges)
+        {
+            _employeeList.FirstOrDefault(e => e.Id == employeeChanges.Id);
+            if (employee != null)
+            {
+                employee.Name = employeeChanges.Name;
+                employee.Email = employeeChanges.Email;
+                employee.Department = employeeChanges.Department;
+            }
+            return employee;
         }
     }
 }
