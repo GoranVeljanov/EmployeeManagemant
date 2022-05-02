@@ -6,3 +6,8 @@ body {
     padding: 0;
 
 }
+.imageThumbnail {
+    height: 250px;
+    width: auto;
+
+}
