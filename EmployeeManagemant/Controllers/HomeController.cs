@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace EmployeeManagemant.Controllers
 {
-   
+
     public class HomeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
@@ -21,13 +21,13 @@ namespace EmployeeManagemant.Controllers
             _employeeRepository = employeeRepository;
             this.hostingEnvironment = hostingEnvironment;
         }
-      
+
         public ViewResult Index()
         {
             var model = _employeeRepository.GetAllEmployee();
             return View(model);
         }
-       
+
         public ViewResult Details(int? id)
         {
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
@@ -42,7 +42,7 @@ namespace EmployeeManagemant.Controllers
         public ViewResult Create()
         {
             return View();
-        }  
+        }
         [HttpGet]
         public ViewResult Edit(int id)
         {
@@ -67,9 +67,9 @@ namespace EmployeeManagemant.Controllers
                 employee.Name = model.Name;
                 employee.Email = model.Email;
                 employee.Department = model.Department;
-                if(model.Photos != null)
+                if (model.Photos != null)
                 {
-                    if(model.ExistingPhotoPath != null)
+                    if (model.ExistingPhotoPath != null)
                     {
                         string filePath = Path.Combine(hostingEnvironment.WebRootPath, "images", model.ExistingPhotoPath);
                         System.IO.File.Delete(filePath);
@@ -103,10 +103,10 @@ namespace EmployeeManagemant.Controllers
         [HttpPost]
         public IActionResult Create(EmployeeCreateViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 string uniqueFileName = ProcessUploadedFile(model);
-                if(model.Photos != null && model.Photos.Count > 0)
+                if (model.Photos != null && model.Photos.Count > 0)
                 {
                     foreach (IFormFile photo in model.Photos)
                     {
@@ -115,8 +115,8 @@ namespace EmployeeManagemant.Controllers
                         string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                         photo.CopyTo(new FileStream(filePath, FileMode.Create));
                     }
-                   
-                  
+
+
                 }
                 Employee newEmployee = new Employee
                 {
