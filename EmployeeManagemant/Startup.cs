@@ -37,6 +37,9 @@ namespace EmployeeManagemant
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            } else
+            {
+                app.UseStatusCodePagesWithRedirects("/Error/{0}");
             }
 
             app.UseStaticFiles();
